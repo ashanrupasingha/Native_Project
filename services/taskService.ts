@@ -1,4 +1,6 @@
 import { db } from "@/firebase"
+import { Plant } from "@/types/plant"
+import { Task } from "@/types/task"
 import {
   addDoc,
   collection,
@@ -7,19 +9,18 @@ import {
   getDocs,
   updateDoc
 } from "firebase/firestore"
-import { Task } from "@/types/task"
 
 export const tasksRef = collection(db, "tasks")
 
 // CREATE
-export const addPlace = async (task: Omit<Task, "id">) => {
+export const addPlace = async (task: Omit<Plant, "id">) => {
   await addDoc(tasksRef, task)
 }
 
 // READ
-export const getAllPlace = async (): Promise<Task[]> => {
+export const getAllPlace = async (): Promise<Plant[]> => {
   const snapshot = await getDocs(tasksRef)
-  return snapshot.docs.map((d) => ({ id: d.id, ...d.data() } as Task))
+  return snapshot.docs.map((d) => ({ id: d.id, ...d.data() } as Plant))
 }
 
 // UPDATE

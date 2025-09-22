@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import {
-  View,
+  Alert,
+  Linking,
+  Modal,
+  SafeAreaView,
+  ScrollView,
+  Switch,
   Text,
   TouchableOpacity,
-  ScrollView,
-  SafeAreaView,
-  Switch,
-  Alert,
-  Modal,
-  Linking,
+  View,
 } from 'react-native';
 
 const SettingsScreen = () => {
@@ -18,13 +18,8 @@ const SettingsScreen = () => {
   const [aboutModalVisible, setAboutModalVisible] = useState(false);
   const [techModalVisible, setTechModalVisible] = useState(false);
 
-  interface HandleThemeChange {
-    (value: boolean): void;
-  }
-
-  const handleThemeChange: HandleThemeChange = (value) => {
+  const handleThemeChange = (value: boolean) => {
     setDarkMode(value);
-    // Here you would typically update your app's theme context
     Alert.alert(
       'Theme Changed',
       `Switched to ${value ? 'Dark' : 'Light'} mode`,
@@ -32,11 +27,7 @@ const SettingsScreen = () => {
     );
   };
 
-  interface HandleNotificationChange {
-    (value: boolean): void;
-  }
-
-  const handleNotificationChange: HandleNotificationChange = (value) => {
+  const handleNotificationChange = (value: boolean) => {
     setNotifications(value);
     Alert.alert(
       'Notifications',
@@ -45,11 +36,7 @@ const SettingsScreen = () => {
     );
   };
 
-  interface HandleSwitchChange {
-    (value: boolean): void;
-  }
-
-  const handleLocationChange: HandleSwitchChange = (value) => {
+  const handleLocationChange = (value: boolean) => {
     setLocationServices(value);
     Alert.alert(
       'Location Services',
@@ -58,12 +45,7 @@ const SettingsScreen = () => {
     );
   };
 
-  interface SocialPressParams {
-    platform: string;
-    url: string;
-  }
-
-  const handleSocialPress = (platform: SocialPressParams['platform'], url: SocialPressParams['url']): void => {
+  const handleSocialPress = (platform: string, url: string): void => {
     Alert.alert(
       `Open ${platform}`,
       `Would you like to open ${platform}?`,
@@ -74,15 +56,7 @@ const SettingsScreen = () => {
     );
   };
 
-  interface SettingItemProps {
-    icon: string;
-    title: string;
-    subtitle?: string;
-    onPress?: () => void;
-    rightComponent?: React.ReactNode;
-  }
-
-  const SettingItem: React.FC<SettingItemProps> = ({ icon, title, subtitle, onPress, rightComponent }) => (
+  const SettingItem = ({ icon, title, subtitle, onPress, rightComponent }: any) => (
     <TouchableOpacity
       style={{
         backgroundColor: 'rgba(255, 255, 255, 0.1)',
@@ -191,7 +165,7 @@ const SettingsScreen = () => {
               textAlign: 'center',
               marginBottom: 20,
             }}>
-              About Sri Lanka Explorer 🏝️
+              About FloraLink 🌿
             </Text>
             
             <Text style={{
@@ -201,19 +175,19 @@ const SettingsScreen = () => {
               marginBottom: 16,
               textAlign: 'center',
             }}>
-              Discover the beauty of Sri Lanka with our comprehensive travel companion app.
+              FloraLink is your smart plant companion — helping you care for your plants with tips, reminders, and guides.
             </Text>
             
             <View style={{ marginBottom: 20 }}>
               <Text style={{ fontSize: 18, fontWeight: '600', color: '#333', marginBottom: 8 }}>
-                ✨ Features:
+                🌱 Features:
               </Text>
               <Text style={{ fontSize: 14, color: '#666', lineHeight: 20 }}>
-                • Explore hidden gems and popular destinations{'\n'}
-                • Interactive maps with offline support{'\n'}
-                • Cultural insights and local recommendations{'\n'}
-                • Weather forecasts and travel tips{'\n'}
-                • Photo sharing and travel journaling
+                • Smart plant care reminders{'\n'}
+                • Identify plants with AI recognition{'\n'}
+                • Tips for watering & sunlight{'\n'}
+                • Track your plant collection{'\n'}
+                • Community sharing & learning
               </Text>
             </View>
             
@@ -232,13 +206,13 @@ const SettingsScreen = () => {
               textAlign: 'center',
               fontStyle: 'italic',
             }}>
-              Made with ❤️ for Sri Lanka travelers
+              Made with ❤️ for plant lovers
             </Text>
           </ScrollView>
           
           <TouchableOpacity
             style={{
-              backgroundColor: '#4f46e5',
+              backgroundColor: '#16a34a',
               borderRadius: 12,
               paddingVertical: 12,
               marginTop: 20,
@@ -303,8 +277,7 @@ const SettingsScreen = () => {
               <Text style={{ fontSize: 14, color: '#666', lineHeight: 20 }}>
                 • React Native - Cross-platform mobile development{'\n'}
                 • Expo Router - Navigation and routing{'\n'}
-                • TypeScript - Type-safe development{'\n'}
-                • Tailwind CSS - Utility-first styling
+                • TypeScript - Type-safe development
               </Text>
             </View>
             
@@ -315,8 +288,7 @@ const SettingsScreen = () => {
               <Text style={{ fontSize: 14, color: '#666', lineHeight: 20 }}>
                 • React Hooks - State management{'\n'}
                 • AsyncStorage - Local data persistence{'\n'}
-                • React Native Maps - Interactive mapping{'\n'}
-                • Toast Notifications - User feedback{'\n'}
+                • Expo Image Picker - Plant photo uploads{'\n'}
                 • Vector Icons - Beautiful iconography
               </Text>
             </View>
@@ -326,22 +298,9 @@ const SettingsScreen = () => {
                 🌐 Backend & Services:
               </Text>
               <Text style={{ fontSize: 14, color: '#666', lineHeight: 20 }}>
-                • REST API - Data communication{'\n'}
-                • Firebase - Authentication & Cloud services{'\n'}
-                • Google Maps API - Location services{'\n'}
-                • Weather API - Real-time weather data
-              </Text>
-            </View>
-            
-            <View style={{ marginBottom: 20 }}>
-              <Text style={{ fontSize: 18, fontWeight: '600', color: '#333', marginBottom: 8 }}>
-                🎨 Design:
-              </Text>
-              <Text style={{ fontSize: 14, color: '#666', lineHeight: 20 }}>
-                • Figma - UI/UX design{'\n'}
-                • Material Design - Design principles{'\n'}
-                • Custom animations - Enhanced user experience{'\n'}
-                • Responsive design - Multi-device support
+                • REST API - Plant data communication{'\n'}
+                • Firebase - Authentication & Cloud storage{'\n'}
+                • AI Plant Recognition API - Identify plants
               </Text>
             </View>
             
@@ -351,7 +310,7 @@ const SettingsScreen = () => {
               textAlign: 'center',
               fontStyle: 'italic',
             }}>
-              Built with modern technologies for the best user experience
+              Built with modern tech for plant care enthusiasts
             </Text>
           </ScrollView>
           
@@ -380,7 +339,7 @@ const SettingsScreen = () => {
   );
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: '#4f46e5' }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#16a34a' }}>
       {/* Background */}
       <View style={{
         position: 'absolute',
@@ -388,7 +347,7 @@ const SettingsScreen = () => {
         left: 0,
         right: 0,
         bottom: 0,
-        backgroundColor: '#4f46e5',
+        backgroundColor: '#16a34a',
       }} />
       <View style={{
         position: 'absolute',
@@ -396,7 +355,7 @@ const SettingsScreen = () => {
         left: 0,
         right: 0,
         bottom: 0,
-        backgroundColor: 'rgba(147, 51, 234, 0.3)',
+        backgroundColor: 'rgba(34, 197, 94, 0.3)',
       }} />
 
       <ScrollView 
@@ -419,7 +378,7 @@ const SettingsScreen = () => {
             justifyContent: 'center',
             marginBottom: 16,
           }}>
-            <Text style={{ fontSize: 36 }}>⚙️</Text>
+            <Text style={{ fontSize: 36 }}>🌿</Text>
           </View>
           <Text style={{
             fontSize: 28,
@@ -435,7 +394,7 @@ const SettingsScreen = () => {
             textAlign: 'center',
             marginTop: 4,
           }}>
-            Customize your experience
+            Customize your FloraLink experience
           </Text>
         </View>
 
@@ -459,7 +418,7 @@ const SettingsScreen = () => {
         <SettingItem
           icon="🔔"
           title="Notifications"
-          subtitle={notifications ? "Receive updates and alerts" : "Notifications disabled"}
+          subtitle={notifications ? "Get plant care reminders" : "Notifications disabled"}
           rightComponent={  
             <Switch
               value={notifications}
@@ -473,7 +432,7 @@ const SettingsScreen = () => {
         <SettingItem
           icon="📍"
           title="Location Services"
-          subtitle={locationServices ? "Access to location enabled" : "Location access disabled"}
+          subtitle={locationServices ? "Enable plant zone detection" : "Location access disabled"}
           rightComponent={
             <Switch
               value={locationServices}
@@ -490,22 +449,15 @@ const SettingsScreen = () => {
         <SettingItem
           icon="👤"
           title="Profile"
-          subtitle="Manage your account details"
+          subtitle="Manage your FloraLink account"
           onPress={() => Alert.alert('Profile', 'Profile settings coming soon!')}
         />
         
         <SettingItem
           icon="🔒"
           title="Privacy & Security"
-          subtitle="Control your privacy settings"
+          subtitle="Control your app privacy"
           onPress={() => Alert.alert('Privacy', 'Privacy settings coming soon!')}
-        />
-        
-        <SettingItem
-          icon="💾"
-          title="Data & Storage"
-          subtitle="Manage app data and storage"
-          onPress={() => Alert.alert('Storage', 'Storage settings coming soon!')}
         />
 
         {/* About Section */}
@@ -514,14 +466,14 @@ const SettingsScreen = () => {
         <SettingItem
           icon="ℹ️"
           title="About"
-          subtitle="Learn more about Sri Lanka Explorer"
+          subtitle="Learn more about FloraLink"
           onPress={() => setAboutModalVisible(true)}
         />
         
         <SettingItem
           icon="🔧"
           title="Technologies"
-          subtitle="View technologies used in this app"
+          subtitle="View technologies powering this app"
           onPress={() => setTechModalVisible(true)}
         />
         
@@ -538,21 +490,21 @@ const SettingsScreen = () => {
         <SettingItem
           icon="🐦"
           title="Twitter"
-          subtitle="Follow us for updates"
+          subtitle="Follow FloraLink updates"
           onPress={() => handleSocialPress('Twitter', 'https://twitter.com')}
         />
         
         <SettingItem
           icon="💼"
           title="LinkedIn"
-          subtitle="Connect with our team"
+          subtitle="Connect with FloraLink team"
           onPress={() => handleSocialPress('LinkedIn', 'https://linkedin.com')}
         />
         
         <SettingItem
           icon="💻"
           title="GitHub"
-          subtitle="View source code"
+          subtitle="View FloraLink source code"
           onPress={() => handleSocialPress('GitHub', 'https://github.com/hansakaV')}
         />
 
@@ -562,15 +514,15 @@ const SettingsScreen = () => {
         <SettingItem
           icon="💬"
           title="Contact Support"
-          subtitle="Get help with the app"
-          onPress={() => Alert.alert('Support', 'Contact support: support@srilankaexplorer.com')}
+          subtitle="Get help with FloraLink"
+          onPress={() => Alert.alert('Support', 'Contact: support@floralink.com')}
         />
         
         <SettingItem
           icon="⭐"
           title="Rate App"
-          subtitle="Rate us on the App Store"
-          onPress={() => Alert.alert('Rate App', 'Thank you for considering rating our app!')}
+          subtitle="Rate us on the app store"
+          onPress={() => Alert.alert('Rate App', 'Thank you for supporting FloraLink!')}
         />
         
         <SettingItem
@@ -599,8 +551,8 @@ const SettingsScreen = () => {
             textAlign: 'center',
             lineHeight: 20,
           }}>
-            Made with ❤️ in Sri Lanka{'\n'}
-            © 2025 Sri Lanka Explorer
+            Made with 🌱 by FloraLink{'\n'}
+            © 2025 FloraLink
           </Text>
         </View>
       </ScrollView>

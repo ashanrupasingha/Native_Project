@@ -1,4 +1,6 @@
 import { register } from "@/services/authService";
+import { Ionicons } from "@expo/vector-icons";
+import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
 import React, { useState } from "react";
 import {
@@ -57,52 +59,74 @@ const Register = () => {
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-green-50">
+    <SafeAreaView className="flex-1 bg-gradient-to-b from-green-100 to-green-50">
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
-        className="flex-1 justify-center p-6"
+        className="flex-1 justify-center px-6"
       >
-        <View className="bg-white rounded-2xl p-6 shadow-lg">
-          <Text className="text-3xl font-bold text-green-700 text-center mb-6">
-            Register
+        <View className="bg-white rounded-3xl p-8 shadow-2xl">
+          {/* Title */}
+          <Text className="text-3xl font-extrabold text-green-600 text-center">
+            Create Account
+          </Text>
+          <Text className="text-center text-gray-500 text-base mb-8">
+            Join FloraLink and start your journey 🌱
           </Text>
 
-          <TextInput
-            placeholder="Email"
-            className="bg-green-100 border border-green-300 rounded-lg px-4 py-3 mb-4 text-gray-900"
-            placeholderTextColor="#6B7280"
-            value={email}
-            keyboardType="email-address"
-            autoCapitalize="none"
-            onChangeText={setEmail}
-          />
+          {/* Email Input */}
+          <View className="flex-row items-center bg-gray-50 border border-gray-300 rounded-xl px-4 py-3 mb-4">
+            <Ionicons name="mail-outline" size={22} color="#6B7280" />
+            <TextInput
+              placeholder="Email"
+              className="flex-1 ml-3 text-gray-900"
+              placeholderTextColor="#9CA3AF"
+              value={email}
+              keyboardType="email-address"
+              autoCapitalize="none"
+              onChangeText={setEmail}
+            />
+          </View>
 
-          <TextInput
-            placeholder="Password"
-            className="bg-green-100 border border-green-300 rounded-lg px-4 py-3 mb-4 text-gray-900"
-            placeholderTextColor="#6B7280"
-            secureTextEntry
-            value={password}
-            onChangeText={setPassword}
-          />
+          {/* Password Input */}
+          <View className="flex-row items-center bg-gray-50 border border-gray-300 rounded-xl px-4 py-3 mb-6">
+            <Ionicons name="lock-closed-outline" size={22} color="#6B7280" />
+            <TextInput
+              placeholder="Password"
+              className="flex-1 ml-3 text-gray-900"
+              placeholderTextColor="#9CA3AF"
+              secureTextEntry
+              value={password}
+              onChangeText={setPassword}
+            />
+          </View>
 
+          {/* Register Button */}
           <TouchableOpacity
-            className="bg-green-600 p-4 rounded-lg mt-2"
             onPress={handleRegister}
             activeOpacity={0.85}
+            className="rounded-2xl overflow-hidden shadow-md"
           >
-            {isLoading ? (
-              <ActivityIndicator color="#fff" size="large" />
-            ) : (
-              <Text className="text-center text-xl font-semibold text-white">
-                Register
-              </Text>
-            )}
+            <LinearGradient
+              colors={["#16A34A", "#22C55E"]}
+              className="p-4 rounded-2xl"
+            >
+              {isLoading ? (
+                <ActivityIndicator color="#fff" size="large" />
+              ) : (
+                <Text className="text-center text-xl font-bold text-white">
+                  Register
+                </Text>
+              )}
+            </LinearGradient>
           </TouchableOpacity>
 
+          {/* Login Link */}
           <Pressable onPress={() => router.replace("/login")} className="mt-6">
-            <Text className="text-center text-green-700 text-lg font-medium">
-              Already have an account? Login
+            <Text className="text-center text-gray-700 text-base">
+              Already have an account?{" "}
+              <Text className="font-semibold text-green-600 underline">
+                Login
+              </Text>
             </Text>
           </Pressable>
         </View>

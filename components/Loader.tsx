@@ -5,6 +5,8 @@ interface LoaderProps {
   visible: boolean
 }
 
+/*************  ✨ Windsurf Command ⭐  *************/
+/*******  08ddd66f-225e-47d6-8009-48146d6724d0  *******/
 const Loader: React.FC<LoaderProps> = ({ visible }) => {
   if (!visible) return null
 

@@ -1,29 +1,24 @@
-import React, { createContext, useContext, useState, ReactNode } from "react"
-import Loader from "@/components/Loader"
+// context/LoaderContext.tsx
+import React, { createContext, useState, useContext, ReactNode } from "react";
 
-interface LoaderContextType {
-  showLoader: () => void
-  hideLoader: () => void
+interface LoaderContextProps {
+  loading: boolean;
+  setLoading: (value: boolean) => void;
 }
 
-const LoaderContext = createContext<LoaderContextType | undefined>(undefined)
+const LoaderContext = createContext<LoaderContextProps>({
+  loading: false,
+  setLoading: () => {},
+});
 
 export const LoaderProvider = ({ children }: { children: ReactNode }) => {
-  const [visible, setVisible] = useState(false) 
-
-  const showLoader = () => setVisible(true)
-  const hideLoader = () => setVisible(false)
+  const [loading, setLoading] = useState(false);
 
   return (
-    <LoaderContext.Provider value={{ showLoader, hideLoader }}>
+    <LoaderContext.Provider value={{ loading, setLoading }}>
       {children}
-      <Loader visible={visible} />
     </LoaderContext.Provider>
-  )
-}
+  );
+};
 
-export const useLoader = () => {
-  const context = useContext(LoaderContext)
-  if (!context) throw new Error("useLoader must be used within LoaderProvider")
-  return context
-}
+export const useLoader = () => useContext(LoaderContext);

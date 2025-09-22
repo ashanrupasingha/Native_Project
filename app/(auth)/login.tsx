@@ -12,6 +12,7 @@ import {
   SafeAreaView,
 } from "react-native";
 import { useRouter } from "expo-router";
+import { LinearGradient } from "expo-linear-gradient";
 import { login } from "@/services/authService";
 
 const Login = () => {
@@ -32,7 +33,7 @@ const Login = () => {
     try {
       const res = await login(email, password);
       console.log("Login Success:", res);
-      router.push("/home"); // navigate to home
+      router.push("/home");
     } catch (err) {
       console.error(err);
       Alert.alert("Login failed", "Something went wrong. Please try again.");
@@ -42,19 +43,20 @@ const Login = () => {
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-gray-100">
+    <SafeAreaView className="flex-1 bg-gradient-to-b from-green-50 to-green-100">
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
-        className="flex-1 justify-center p-4"
+        className="flex-1 justify-center px-6"
       >
-        <View className="mb-8">
-          <Text className="text-3xl font-bold text-blue-600 text-center mb-6">
-            Login to Flora Link
+        <View className="bg-white rounded-2xl p-8 shadow-xl">
+          <Text className="text-4xl font-extrabold text-green-600 text-center mb-8">
+            FloraLink
           </Text>
 
+          {/* Email Input */}
           <TextInput
             placeholder="Email"
-            className="bg-white border border-gray-300 rounded px-4 py-3 mb-4 text-gray-900"
+            className="bg-gray-50 border border-gray-300 rounded-xl px-4 py-4 mb-4 text-gray-900 focus:border-green-500"
             placeholderTextColor="#9CA3AF"
             value={email}
             keyboardType="email-address"
@@ -62,33 +64,41 @@ const Login = () => {
             onChangeText={setEmail}
           />
 
+          {/* Password Input */}
           <TextInput
             placeholder="Password"
-            className="bg-white border border-gray-300 rounded px-4 py-3 mb-4 text-gray-900"
+            className="bg-gray-50 border border-gray-300 rounded-xl px-4 py-4 mb-6 text-gray-900 focus:border-green-500"
             placeholderTextColor="#9CA3AF"
             secureTextEntry
             value={password}
             onChangeText={setPassword}
           />
 
+          {/* Login Button */}
           <TouchableOpacity
-            className="bg-blue-500 p-4 rounded mt-2"
             onPress={handleLogin}
-            activeOpacity={0.8}
+            activeOpacity={0.85}
+            className="rounded-xl overflow-hidden"
           >
-            {isLoading ? (
-              <ActivityIndicator color="#fff" size="large" />
-            ) : (
-              <Text className="text-center text-2xl text-white">Login</Text>
-            )}
+            <LinearGradient
+              colors={["#22C55E", "#16A34A"]} // green shades
+              className="p-4 rounded-xl"
+            >
+              {isLoading ? (
+                <ActivityIndicator color="#fff" size="large" />
+              ) : (
+                <Text className="text-center text-xl font-semibold text-white">
+                  Login
+                </Text>
+              )}
+            </LinearGradient>
           </TouchableOpacity>
 
-          <Pressable
-            onPress={() => router.push("/register")}
-            className="mt-4"
-          >
-            <Text className="text-center text-blue-500 text-lg">
-              Don't have an account? Register
+          {/* Register Link */}
+          <Pressable onPress={() => router.push("/register")} className="mt-6">
+            <Text className="text-center text-green-600 text-lg">
+              Don’t have an account?{" "}
+              <Text className="font-semibold underline">Register</Text>
             </Text>
           </Pressable>
         </View>

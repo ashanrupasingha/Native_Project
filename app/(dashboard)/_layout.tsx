@@ -36,6 +36,8 @@ const DashboardLayout = () => {
       ))}
     </Tabs>
   )
+  
 }
+
 
 export default DashboardLayout

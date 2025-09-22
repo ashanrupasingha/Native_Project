@@ -1,52 +1,45 @@
+// services/plantService.ts
+import { db } from "@/firebase";
 import { Plant } from "@/types/plant";
-import { getAllPlace } from "./taskService";
+import {
+  collection,
+  addDoc,
+  getDocs,
+  updateDoc,
+  deleteDoc,
+  doc,
+} from "firebase/firestore";
 
-//const API_URL = "http://your-backend.com/api/plants"; // change this
-const API_URL = "http://10.0.2.2:8080/api/plants";
+const plantRef = collection(db, "plants");
 
+// CREATE
+export const addPlant = async (plant: Omit<Plant, "id">) => {
+  await addDoc(plantRef, plant);
+};
 
-// Fetch all plants
+// READ
 export const getAllPlants = async (): Promise<Plant[]> => {
-  try {
-    const response = await getAllPlace();
-    return response;
-  } catch (error) {
-    console.error("Error fetching plants:", error);
-    return [];
-  }
+  const snapshot = await getDocs(plantRef);
+  return snapshot.docs.map((docSnap) => ({
+    id: docSnap.id,
+    ...docSnap.data(),
+  })) as Plant[];
 };
 
-// Add new plant
-export const addPlant = async (plant: Plant): Promise<void> => {
-  try {
-    await fetch(API_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(plant),
-    });
-  } catch (error) {
-    console.error("Error adding plant:", error);
-  }
+// UPDATE
+export const updatePlant = async (id: string, plant: Partial<Plant>) => {
+  const docRef = doc(db, "plants", id);
+  await updateDoc(docRef, plant);
 };
 
-// Update plant
-export const updatePlant = async (id: string, plant: Plant): Promise<void> => {
+// DELETE
+export const deletePlant = async (id: string): Promise<boolean> => {
   try {
-    await fetch(`${API_URL}/${id}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(plant),
-    });
-  } catch (error) {
-    console.error("Error updating plant:", error);
-  }
-};
-
-// Delete plant
-export const deletePlant = async (id: string): Promise<void> => {
-  try {
-    await fetch(`${API_URL}/${id}`, { method: "DELETE" });
+    const docRef = doc(db, "plants", id);
+    await deleteDoc(docRef);
+    return true; // deletion successful
   } catch (error) {
     console.error("Error deleting plant:", error);
+    throw new Error("Failed to delete plant");
   }
 };
